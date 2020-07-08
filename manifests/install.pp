@@ -18,7 +18,7 @@ class perlbrew::install {
   }
 
   exec {'install_perlbrew':
-    environment => 'PERLBREW_ROOT=/opt/perl5',
+    environment => [ 'PERLBREW_ROOT=/opt/perl5', 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'],
     command     => '/usr/bin/curl -L http://install.perlbrew.pl | /bin/bash',
     creates     => "${perlbrew::perlbrew_root}/bin/perlbrew",
     require     => Package['curl'],
