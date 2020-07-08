@@ -10,15 +10,6 @@
 #   Specify the root of your perlbew installation. Defaults to '/opt/perl5'.
 #
 class perlbrew::params {
-
-  case $::osfamily {
-    'RedHat': {
       $perlbrew_root      = '/opt/perl5'
       $perlbrew_init_file = '/etc/profile.d/perlbrew.sh'
-    }
-    default: {
-      fail("${::operatingsystem} not supported")
-    }
-  }
-
 }
