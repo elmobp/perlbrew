@@ -24,7 +24,7 @@ class perlbrew::perl (
   $compile_options = [],
 
 ) {
-  
+
   include perlbrew
 
   if (is_array($compile_options)) {
@@ -37,18 +37,35 @@ class perlbrew::perl (
       'PERLBREW_HOME=/tmp/.perlbrew',
       'HOME=/opt',
     ],
+    path    => [
+      "${perlbrew::perlbrew_root}/bin",
+      '/usr/bin',                
+      '/usr/sbin',               
+      '/bin',                    
+      '/sbin'                    
+    ], 
     command     => "source ${perlbrew::perlbrew_root}/etc/bashrc; ${perlbrew::perlbrew_root}/bin/perlbrew install perl-${version} ${compile_opts}",
     creates     => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl",
-    provider    => shell,
     timeout     => 0,
     require     => [ Class['perlbrew::install'], Class['perlbrew::config'], ],
   }
 
   exec {"switch_to_perl_${version}":
-    command  => "source /etc/profile; ${perlbrew::perlbrew_root}/bin/perlbrew switch perl-${version}",
-    provider => shell,
+    command  => "${perlbrew::perlbrew_root}/bin/perlbrew switch perl-${version}",
     unless   => "perl -e 'print $^V' | grep v${version}",
     require  => Exec["install_perl_${version}"],
+    path    => [
+      "${perlbrew::perlbrew_root}/bin",
+      '/usr/bin',
+      '/usr/sbin',
+      '/bin',
+      '/sbin'
+    ],
+    environment => [
+      "PERLBREW_ROOT=${perlbrew::perlbrew_root}",
+      'PERLBREW_HOME=/tmp/.perlbrew',
+      'HOME=/opt',
+    ],
   }
 
   exec{'install_cpan':
@@ -70,7 +87,7 @@ class perlbrew::perl (
   Concat::Fragment {
     target  => $perlbrew::perlbrew_init_file,
   }
-  
+
   concat::fragment {'perlbrew_manpath':
     content => "export PERLBREW_MANPATH=\"${perlbrew::perlbrew_root}/perls/perl-${version}/man\"",
     order   => 02,
