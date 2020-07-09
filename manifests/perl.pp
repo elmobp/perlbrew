@@ -78,6 +78,11 @@ class perlbrew::perl (
     unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MBundle::LWP -e 1",
     timeout => 0,
   } ->
+  exec {'install_IO::Socket::SSL':
+    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm --install IO::Socket::SSL",
+    unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MIO::Socket::SSL -e 1",
+    timeout => 0,
+  } ->
   exec {'install_Crypt::SSLeay':
     command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm --install Crypt::SSLeay",
     unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MCrypt::SSLeay -e 1",
