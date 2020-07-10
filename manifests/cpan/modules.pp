@@ -54,7 +54,7 @@ class perlbrew::cpan::modules (
     }
     $cpan_command = "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/cpanm ${cpan_module}"
     exec {"install_perl_module_${cpan_module}":
-      command     => $cpan_command
+      command     => $cpan_command,
       timeout     => 0,
       creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/${perlbrew::perl::version}/${file_path}",
       environment => [
