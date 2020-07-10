@@ -34,11 +34,9 @@ class perlbrew::cpan::modules (
     $file_path = regsubst($cpan_module, '::', '/', 'G')
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
-      refreshonly => true,
       timeout     => 0,
       creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}"
     }
-    notify{"${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}":}
   }
 
 }
