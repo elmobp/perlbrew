@@ -35,7 +35,7 @@ class perlbrew::cpan::modules (
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
       timeout     => 0,
-      creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}"
+      creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/${perlbrew::perl::version}/${file_path}"
     }
   }
 
