@@ -19,7 +19,6 @@ class perlbrew::cpan::modules (
   $cpan_modules  = [],
   $cpanfile_dir  = '/tmp',
   $options       = [],
-
 ) {
 
   include perlbrew::perl
@@ -39,6 +38,7 @@ class perlbrew::cpan::modules (
       timeout     => 0,
       creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}"
     }
+    notify{"${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}":}
   }
 
 }
