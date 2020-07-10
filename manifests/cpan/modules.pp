@@ -35,7 +35,7 @@ class perlbrew::cpan::modules (
     exec {"install_perl_module_deps_${cpan_module}":
       command     => $cpan_deps_command,
       timeout     => 0,
-      unless      => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -M${cpan_module} -e 1",
+      unless      => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/perl -M${cpan_module} -e 1",
       environment => [
         "PERLBREW_ROOT=${perlbrew::perlbrew_root}",
         'PERLBREW_HOME=/tmp/.perlbrew',
@@ -57,7 +57,7 @@ class perlbrew::cpan::modules (
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
       timeout     => 0,
-      unless      => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -M${cpan_module} -e 1",
+      unless      => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/perl -M${cpan_module} -e 1",
       environment => [
         "PERLBREW_ROOT=${perlbrew::perlbrew_root}",
         'PERLBREW_HOME=/tmp/.perlbrew',
