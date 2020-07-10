@@ -35,7 +35,22 @@ class perlbrew::cpan::modules (
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
       timeout     => 0,
-      creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/${perlbrew::perl::version}/${file_path}"
+      creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/${perlbrew::perl::version}/${file_path}",
+      environment => [
+        "PERLBREW_ROOT=${perlbrew::perlbrew_root}",
+        'PERLBREW_HOME=/tmp/.perlbrew',
+        "PERLBREW_PERL=perl-${perlbrew::perl::version}",
+        "PERLBREW_PATH=${perlbrew::perlbrew_root}/bin:${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin",
+        "PERLBREW_MANPATH=${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/man",
+        'HOME=/opt',
+      ],
+      path    => [
+      "${perlbrew::perlbrew_root}/bin",
+      '/usr/bin',
+      '/usr/sbin',
+      '/bin',
+      '/sbin'
+      ],
     }
   }
 
