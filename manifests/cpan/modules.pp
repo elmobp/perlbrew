@@ -31,19 +31,13 @@ class perlbrew::cpan::modules (
   $merged_options = concat($default_options, $options)
   $install_opts = join($merged_options, ' ')
   $cpan_modules.each |$cpan_module| {
-    concat {"${cpanfile_dir}/${cpan_module}":
-      owner => 'root',
-      group => 'root',
-      mode  => '0644',
-    }
-
     $cpan_command = "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/cpanm ${install_opts} ${cpan_module}"
-
+    $file_path = regsubst($cpan_module, '::', '/', 'G')
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
-      subscribe   => Concat["${cpanfile_dir}/${cpan_module}"],
       refreshonly => true,
       timeout     => 0,
+      creates     => "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/lib/site_perl/${perlbrew::perl::version}/x86_64-linux/auto/${file_path}"
     }
   }
 
