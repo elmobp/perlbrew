@@ -44,7 +44,7 @@ class perlbrew::perl (
       '/bin',                    
       '/sbin'                    
     ], 
-    command     => "source ${perlbrew::perlbrew_root}/etc/bashrc; ${perlbrew::perlbrew_root}/bin/perlbrew install perl-${version} ${compile_opts}",
+    command     => "${perlbrew::perlbrew_root}/bin/perlbrew install perl-${version} ${compile_opts}",
     creates     => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl",
     timeout     => 0,
     require     => [ Class['perlbrew::install'], Class['perlbrew::config'], ],
