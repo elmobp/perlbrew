@@ -51,10 +51,10 @@ class perlbrew::perl (
   }
 
   exec {"switch_to_perl_${version}":
-    command  => "${perlbrew::perlbrew_root}/bin/perlbrew switch perl-${version}",
-    unless   => "perl -e 'print $^V' | grep v${version}",
-    require  => Exec["install_perl_${version}"],
-    path    => [
+    command     => "${perlbrew::perlbrew_root}/bin/perlbrew switch perl-${version}",
+    unless      => "perl -e 'print $^V' | grep v${version}",
+    require     => Exec["install_perl_${version}"],
+    path        => [
       "${perlbrew::perlbrew_root}/bin",
       '/usr/bin',
       '/usr/sbin',
@@ -66,6 +66,8 @@ class perlbrew::perl (
       'PERLBREW_HOME=/tmp/.perlbrew',
       'HOME=/opt',
     ],
+    subscribe   => Exec["install_perl_${version}"],
+    refreshonly => true
   }
 
   exec{'install_cpan':
