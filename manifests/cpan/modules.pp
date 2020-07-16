@@ -54,7 +54,7 @@ class perlbrew::cpan::modules (
       notify      => Exec["install_perl_module_${cpan_module}"],
       require     => Exec["install_perl_${perlbrew::perl::version}"]
     }
-    $cpan_command = "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/cpanm install ${cpan_module}"
+    $cpan_command = "${perlbrew::perlbrew_root}/perls/perl-${perlbrew::perl::version}/bin/cpanm ${install_opts} install ${cpan_module}"
     exec {"install_perl_module_${cpan_module}":
       command     => $cpan_command,
       timeout     => 0,
