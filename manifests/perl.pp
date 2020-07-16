@@ -20,9 +20,11 @@
 #
 class perlbrew::perl (
 
-  $version         = '5.16.3',
-  $compile_options = [],
-
+  $version          = '5.16.3',
+  $compile_options  = [],
+  $lwp_options      = '',
+  $socket_options   = '',
+  $ssleay_options   = ''
 ) {
 
   include perlbrew
@@ -76,17 +78,17 @@ class perlbrew::perl (
     require => Exec["switch_to_perl_${version}"],
   } ->
   exec {'install_Bundle::LWP':
-    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm --install Bundle::LWP",
+    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm $lwp_options --install Bundle::LWP",
     unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MBundle::LWP -e 1",
     timeout => 0,
   } ->
   exec {'install_IO::Socket::SSL':
-    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm --install IO::Socket::SSL",
+    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm $socket_options --install IO::Socket::SSL",
     unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MIO::Socket::SSL -e 1",
     timeout => 0,
   } ->
   exec {'install_Crypt::SSLeay':
-    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm --install Crypt::SSLeay",
+    command => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/cpanm $ssleay_options --install Crypt::SSLeay",
     unless  => "${perlbrew::perlbrew_root}/perls/perl-${version}/bin/perl -MCrypt::SSLeay -e 1",
     timeout => 0,
   }
