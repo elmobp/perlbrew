@@ -75,7 +75,6 @@ class perlbrew::cpan::modules (
         '/sbin'
       ],
       subscribe   => Exec["install_perl_module_deps_${cpan_module}"],
-      refreshonly => true
     }
   }
 
